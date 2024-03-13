@@ -1,43 +1,45 @@
 function generateQR() {
-    // Get user input
-    var data = document.getElementById("dataInput").value;
-  
-    // // Get QR code container element
-    // var qrCodeContainer = document.getElementById("qr-code-container");
-  
-  //   // Clear previous QR code (optional)
-  //   qrCodeContainer.innerHTML = "";
-  
-  //   // Create new QR code object with qrcode.js
-  //   var qrcode = new QRCode(qrCodeContainer, {
-  //     text: data,
-  //     width: 256,
-  //     height: 256,
-  //     colorDark : "#000000",
-  //     colorLight : "#ffffff",
-  //     errorCorrectionLevel: "H",
-  //   });
-  // }
+  // var text = "Device: LG Gram 17\nReference: MA-LT-001"
+  var subject =
+    "[MA-IT] Device # " +
+    document.getElementById("dataInput").value;
+  var to = "it@marquesalmeida.com";
+
+  var data =
+    "MATMSG:TO:" +
+    to +
+    ";" +
+    "SUB:" +
+    subject +
+    ";;";
+
+  var qrCodeContainer = document.getElementById("qr-code-container");
+  qrCodeContainer.innerHTML = "";
 
   const qrCode = new QRCodeStyling({
-    width: 256,
-    height: 256,
-    type: "png",
+    width: 300,
+    height: 300,
+    type: "svg",
     data: data,
-    image: "https://www.marquesalmeida.com/cdn/shop/files/white.png",
+    errorCorrectionLevel: "M",
+    image: "https://i.ibb.co/JkZpnsy/ma.png",
     dotsOptions: {
-        color: "#000",
+      color: "#000",
     },
     backgroundOptions: {
-        color: "#FF0000",
+      color: "#fff",
     },
     imageOptions: {
-        crossOrigin: "anonymous",
-        imageSize: 0.5
-       
-    }
+      margin: 5,
+      imageSize: 0.5,
+    },
   });
-  
+
   qrCode.append(document.getElementById("qr-code-container"));
-  // qrCode.download({ name: "qr", extension: "svg" });
+
+  // Download functionality
+  const downloadLink = document.getElementById("downloadLink");
+  downloadLink.addEventListener("click", () => {
+    qrCode.download({ name: "qr", extension: "png" });
+  });
 }
